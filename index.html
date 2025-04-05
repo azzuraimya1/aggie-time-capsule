@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBCU Time Capsule</title>
+
+<style>
+/* Change the background to the specific blue color */
+body {
+background-color: #00316E; /* Blue background */
+font-family: Arial, sans-serif;
+text-align: center;
+color: white; /* White text for contrast */
+}
+
+/* Style for the title */
+h1 {
+color: gold; /* Gold color for the title */
+font-family: 'Georgia', serif; /* Fancy font for the title */
+font-size: 50px; /* Larger size for the title */
+text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Fancy shadow effect */
+margin-top: 50px;
+}
+
+/* Styling for the memory containers */
+div {
+background: white;
+color: black;
+border: 1px solid #ccc;
+padding: 20px;
+margin: 20px;
+border-radius: 10px;
+}
+
+h2 {
+color: #333;
+font-size: 24px;
+}
+
+img {
+width: 300px;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+p {
+font-size: 18px;
+line-height: 1.5;
+}
+</style>
+</head>
+<body>
+
+<h1>HBCU Time Capsule</h1>
+
+<!-- Loop through the memories data passed from Python -->
+{% for place, memory in memories.items() %}
+<div>
+<h2>{{ place }}</h2>
+<img src="{{ memory.photo }}" alt="Memory photo">
+<p>{{ memory.story }}</p>
+</div>
+{% endfor %}
+
+</body>
+</html>

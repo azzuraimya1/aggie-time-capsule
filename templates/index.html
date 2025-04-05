@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aggie Time Capsule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #002147;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: gold;
+            font-size: 2em;
+        }
+        form {
+            margin-top: 40px;
+        }
+        input, textarea, button {
+            font-family: 'Press Start 2P', cursive;
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background-color: gold;
+            color: black;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 30px;
+            border: 4px solid gold;
+            border-radius: 10px;
+        }
+        .memory-section {
+            margin-top: 50px;
+        }
+        .memory {
+            background-color: white;
+            color: black;
+            margin: 20px auto;
+            padding: 15px;
+            border-radius: 12px;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+        .memory img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aggie Time Capsule 💙💛</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="text" name="year" placeholder="Graduation Year" required>
+        <textarea name="memory" placeholder="Share your memory..." required></textarea>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Add Memory</button>
+    </form>
+
+    <h2>Campus Map</h2>
+    <div id="map"></div>
+
+    <script>
+        function initMap() {
+            var ncat = {lat: 36.0700, lng: -79.7920};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: ncat
+            });
+
+            var marker = new google.maps.Marker({
+                position: ncat,
+                map: map,
+                title: 'NCAT Campus'
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl-gr877TPUorDXy8T5o8k77tn915imCo&callback=initMap" async defer></script>
+
+    <div class="memory-section">
+        <h2>Submitted Memories 📸</h2>
+        {% for memory in memories %}
+            <div class="memory">
+                <p><strong>{{ memory.name }} (Class of {{ memory.year }})</strong></p>
+                <p>{{ memory.memory }}</p>
+                {% if memory.image %}
+                    <img src="{{ url_for('uploaded_file', filename=memory.image) }}" alt="Memory Image">
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
